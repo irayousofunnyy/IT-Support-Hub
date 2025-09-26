@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # IT Support Hub — Laravel + MySQL + Tailwind
 
 An internal Knowledge Base (KB) for IT support.
@@ -742,3 +743,7 @@ You can then create additional users via registration; they default to `staff` r
 - Role-based controls are enforced by Gate `manage-articles` and middleware for auth-only actions.
 - Tailwind + Breeze provides a clean, responsive UI with dark mode support.
 
+=======
+# IT-Support-Hub
+a system where user can learn troubleshooting and IT admin will incahrge in the content management 
+>>>>>>> 131f454b6aeb1a51ff0d90a39ac2fa999c138a03
