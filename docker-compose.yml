@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    container_name: itshub-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./it-support-hub:/var/www/html
+      - ./docker/app/php.ini:/usr/local/etc/php/php.ini:ro
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=1
+
+  mysql:
+    image: mysql:8.0
+    container_name: itshub-mysql
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password --sql-mode="" --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: it_support_hub
+      MYSQL_USER: it_hub
+      MYSQL_PASSWORD: strongpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+  node:
+    image: node:18-alpine
+    container_name: itshub-node
+    working_dir: /var/www/html
+    volumes:
+      - ./it-support-hub:/var/www/html
+    command: sh -c "npm install && npm run dev"
+    depends_on:
+      - app
+
+volumes:
+  db-data:
+
+
+
